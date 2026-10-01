@@ -163,25 +163,23 @@ input[type=text]:focus{border-color:var(--sky-strong)}
 footer{text-align:center; padding:40px 0 110px; color:var(--muted); font-size:15px}
 footer .hand{font-size:34px; color:var(--ink); display:block; margin-bottom:6px}
 
-/* stickers */
-.stk{position:absolute; pointer-events:none; z-index:2}
-.hero .stk{z-index:0}
-.stk svg{width:100%; height:auto; display:block; overflow:visible; filter:drop-shadow(0 4px 6px rgba(43,42,46,.14))}
+/* scattered background art */
+#bgart{position:absolute; top:0; left:0; width:100%; z-index:0; pointer-events:none; overflow:visible}
+.art{position:absolute; opacity:0; transition:opacity .6s ease}
+.art.show{opacity:1}
+.art svg{width:100%; height:auto; display:block; overflow:visible; filter:drop-shadow(0 4px 6px rgba(43,42,46,.13))}
+.hero .wrap, footer{position:relative; z-index:1}
 .swim{animation:swim var(--dur,6s) ease-in-out infinite; animation-delay:var(--del,0s)}
 .wob{animation:wob var(--dur,4s) ease-in-out infinite; animation-delay:var(--del,0s)}
-.spin{animation:spin 14s linear infinite}
+.spin{animation:spin 16s linear infinite}
+.float{animation:float var(--dur,8s) ease-in-out infinite; animation-delay:var(--del,0s)}
 .bubbles circle{animation:bubble 2.4s ease-in infinite} .bubbles circle:nth-child(2){animation-delay:.8s} .bubbles circle:nth-child(3){animation-delay:1.6s}
 @keyframes swim{0%,100%{transform:translateX(0) rotate(-5deg)}50%{transform:translateX(22px) rotate(5deg)}}
 @keyframes wob{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg) translateY(-4px)}}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes bubble{0%{transform:translateY(0);opacity:0}20%{opacity:1}100%{transform:translateY(-26px);opacity:0}}
-.card .stk{width:74px}
 section{position:relative}
 section .card, section h2{position:relative; z-index:1}
-.bg{position:absolute; z-index:0; pointer-events:none; width:var(--w,72px); opacity:.95}
-.bg svg{width:100%; height:auto; display:block; overflow:visible; filter:drop-shadow(0 4px 6px rgba(43,42,46,.12))}
-@media (min-width:1000px){.bg{width:calc(var(--w,72px)*1.6); top:var(--dt,30%)!important; bottom:auto!important} .bg.out-l{left:calc(50% - 380px - var(--w,72px)*1.9)!important} .bg.out-r{right:calc(50% - 380px - var(--w,72px)*1.9)!important}}
-@media (max-width:420px){.card .stk{width:58px}}
 
 /* reveal */
 .rv{opacity:0; transform:translateY(26px) scale(.985); transition:opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1)}
@@ -206,6 +204,7 @@ section .card, section h2{position:relative; z-index:1}
 <body>
 
 <canvas id="confetti"></canvas>
+<div id="bgart" aria-hidden="true"></div>
 
 <!-- ======== sticker sprite (Yakut flavour, kids' style) ======== -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -282,13 +281,111 @@ section .card, section h2{position:relative; z-index:1}
       <use href="#arm" transform="rotate(60 30 30)"/><use href="#arm" transform="rotate(120 30 30)"/><use href="#arm" transform="rotate(180 30 30)"/><use href="#arm" transform="rotate(240 30 30)"/><use href="#arm" transform="rotate(300 30 30)"/>
     </g>
   </symbol>
-  <symbol id="s-stroganina" viewBox="0 0 120 80">
+  <symbol id="s-stroganina" viewBox="0 0 130 90">
     <g stroke="#2b2a2e" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
-      <ellipse cx="60" cy="58" rx="56" ry="16" fill="#fff"/>
-      <path d="M30 56 q8 -30 26 -26 q-6 14 -2 28 Z" fill="#fde3ea"/>
-      <path d="M52 56 q4 -34 24 -30 q-4 16 2 30 Z" fill="#f8c9d4"/>
-      <path d="M74 56 q10 -26 24 -16 q-10 8 -6 18 Z" fill="#fde3ea"/>
-      <path d="M40 60 h10 M62 62 h12 M84 60 h8" fill="none" opacity=".4"/>
+      <rect x="4" y="54" width="122" height="22" rx="8" fill="#d9b48f"/>
+      <path d="M18 65 h20 M50 65 h30 M92 65 h18" stroke="#b08a60" stroke-width="2"/>
+      <!-- curled shavings of frozen fish -->
+      <path d="M24 54 c-2 -20 10 -32 24 -26 c10 4 8 18 -2 18 c-8 0 -8 -10 0 -10" fill="#fde3ea"/>
+      <path d="M54 54 c-4 -22 14 -36 28 -24 c10 8 2 22 -8 18 c-8 -3 -4 -12 2 -10" fill="#f8c9d4"/>
+      <path d="M86 54 c-2 -18 12 -28 24 -20 c8 6 2 18 -6 14 c-6 -3 -3 -10 2 -8" fill="#fde3ea"/>
+      <path d="M40 54 c2 -12 14 -16 20 -8" fill="none" opacity=".5"/>
+      <!-- salt dish -->
+      <ellipse cx="112" cy="46" rx="11" ry="6" fill="#fff"/>
+      <circle cx="108" cy="45" r="1.5" fill="#2b2a2e" stroke="none"/><circle cx="114" cy="44" r="1.5" fill="#2b2a2e" stroke="none"/><circle cx="111" cy="48" r="1.5" fill="#2b2a2e" stroke="none"/>
+    </g>
+  </symbol>
+  <symbol id="s-fish2" viewBox="0 0 130 80">
+    <g transform="translate(130 0) scale(-1 1)" stroke="#2b2a2e" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M92 40 L124 14 L118 40 L124 66 Z" fill="#f6894f"/>
+      <path d="M44 22 Q58 2 74 22 Z" fill="#f6894f"/>
+      <path d="M50 58 Q60 76 74 60 Z" fill="#f6894f"/>
+      <ellipse cx="56" cy="40" rx="40" ry="20" fill="#fcd8bd"/>
+      <path d="M44 24 q10 16 0 32 M62 22 q12 18 0 36 M80 28 q8 12 0 24" fill="none" opacity=".55"/>
+      <circle cx="30" cy="36" r="6" fill="#fff"/><circle cx="31" cy="36.5" r="2.5" fill="#2b2a2e" stroke="none"/>
+      <path d="M16 46 q5 4 10 0" fill="none"/>
+    </g>
+  </symbol>
+  <symbol id="s-mammoth" viewBox="0 0 150 120">
+    <g stroke="#2b2a2e" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+      <rect x="34" y="84" width="16" height="26" rx="6" fill="#b07a4c"/><rect x="58" y="86" width="16" height="26" rx="6" fill="#b07a4c"/>
+      <rect x="84" y="86" width="16" height="26" rx="6" fill="#b07a4c"/><rect x="106" y="84" width="16" height="26" rx="6" fill="#b07a4c"/>
+      <path d="M26 68 c0 -36 30 -48 56 -46 c26 2 44 18 44 44 c0 20 -14 30 -34 30 h-36 c-20 0 -30 -10 -30 -28 z" fill="#c08a5a"/>
+      <path d="M30 60 l8 -12 l8 12 l8 -12 l8 12 l8 -12 l8 12" fill="none" opacity=".45"/>
+      <circle cx="118" cy="58" r="22" fill="#c08a5a"/>
+      <path d="M126 70 c14 8 14 30 4 40 c-6 6 -14 2 -10 -5 c6 -10 4 -20 -4 -27 z" fill="#c08a5a"/>
+      <path d="M112 76 q-18 10 -8 26" fill="none" stroke-width="9"/><path d="M112 76 q-18 10 -8 26" fill="none" stroke="#fff" stroke-width="4"/>
+      <circle cx="122" cy="52" r="3" fill="#2b2a2e" stroke="none"/>
+      <circle cx="100" cy="52" r="7" fill="#b07a4c"/>
+    </g>
+  </symbol>
+  <symbol id="s-reindeer" viewBox="0 0 120 120">
+    <g stroke="#2b2a2e" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M44 42 q-6 -20 -16 -30 M40 30 l-12 2 M42 20 l-8 -8 M76 42 q6 -20 16 -30 M80 30 l12 2 M78 20 l8 -8" stroke="#7a4f32" stroke-width="6" fill="none"/>
+      <ellipse cx="30" cy="62" rx="12" ry="8" fill="#c9a27a" transform="rotate(-20 30 62)"/><ellipse cx="90" cy="62" rx="12" ry="8" fill="#c9a27a" transform="rotate(20 90 62)"/>
+      <circle cx="60" cy="70" r="30" fill="#c9a27a"/>
+      <ellipse cx="60" cy="86" rx="16" ry="11" fill="#e6c9a8"/>
+      <circle cx="60" cy="86" r="6" fill="#ef6f9a"/>
+      <circle cx="49" cy="64" r="3" fill="#2b2a2e" stroke="none"/><circle cx="71" cy="64" r="3" fill="#2b2a2e" stroke="none"/>
+    </g>
+  </symbol>
+  <symbol id="s-gift" viewBox="0 0 100 100">
+    <g stroke="#2b2a2e" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+      <rect x="14" y="46" width="72" height="48" rx="6" fill="#c3e1f5"/>
+      <rect x="8" y="32" width="84" height="18" rx="5" fill="#5aa9e6"/>
+      <rect x="44" y="32" width="12" height="62" fill="#fae7a6"/>
+      <ellipse cx="36" cy="24" rx="13" ry="8" fill="#f2b63c" transform="rotate(-25 36 24)"/><ellipse cx="64" cy="24" rx="13" ry="8" fill="#f2b63c" transform="rotate(25 64 24)"/>
+      <circle cx="50" cy="27" r="5" fill="#f2b63c"/>
+    </g>
+  </symbol>
+  <symbol id="s-popper" viewBox="0 0 120 120">
+    <g stroke="#2b2a2e" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M12 108 L58 42 L82 66 Z" fill="#ef6f9a"/>
+      <path d="M30 82 l16 16 M22 94 l10 10 M40 70 l18 18" stroke="#fff" stroke-width="4" opacity=".7"/>
+      <path d="M70 36 q10 -16 28 -10" fill="none" stroke="#5aa9e6" stroke-width="4"/>
+      <path d="M86 56 q16 -4 24 10" fill="none" stroke="#5fb27a" stroke-width="4"/>
+      <rect x="62" y="14" width="10" height="10" rx="2" fill="#f2b63c" transform="rotate(20 67 19)"/>
+      <rect x="96" y="30" width="10" height="10" rx="2" fill="#8b6fd1" transform="rotate(-15 101 35)"/>
+      <circle cx="84" cy="22" r="5" fill="#ef6f9a"/><circle cx="106" cy="54" r="5" fill="#5aa9e6"/>
+      <path d="M50 24 l2 6 l6 2 l-6 2 l-2 6 l-2 -6 l-6 -2 l6 -2 Z" fill="#f2b63c" stroke-width="2"/>
+    </g>
+  </symbol>
+  <symbol id="s-cakeslice" viewBox="0 0 120 100">
+    <g stroke="#2b2a2e" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M8 78 L62 26 L112 68 L112 84 L8 94 Z" fill="#fcd8bd"/>
+      <path d="M8 78 L62 26 L112 68 Z" fill="#f8c9d4"/>
+      <path d="M26 72 l44 -24 M44 80 l48 -24" stroke="#ef6f9a" stroke-width="4"/>
+      <circle cx="62" cy="22" r="8" fill="#ef6f9a"/><path d="M62 14 q4 -8 10 -6" fill="none" stroke="#5fb27a" stroke-width="3"/>
+    </g>
+  </symbol>
+  <symbol id="s-balloons" viewBox="0 0 100 130">
+    <g stroke="#2b2a2e" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M30 56 q10 40 24 68 M62 48 q-4 40 -8 76 M78 66 q-14 30 -24 58" fill="none" stroke-width="2"/>
+      <ellipse cx="30" cy="36" rx="18" ry="22" fill="#f8c9d4"/><path d="M30 58 l-4 6 h8 z" fill="#f8c9d4"/>
+      <ellipse cx="78" cy="46" rx="16" ry="20" fill="#fae7a6"/><path d="M78 66 l-4 6 h8 z" fill="#fae7a6"/>
+      <ellipse cx="60" cy="26" rx="19" ry="24" fill="#c3e1f5"/><path d="M60 50 l-4 6 h8 z" fill="#c3e1f5"/>
+      <path d="M52 14 q-6 4 -6 12" fill="none" stroke="#fff" stroke-width="3"/>
+    </g>
+  </symbol>
+  <symbol id="s-star" viewBox="0 0 70 70">
+    <path d="M35 4 l9 20 l22 2 l-17 15 l5 22 l-19 -12 l-19 12 l5 -22 l-17 -15 l22 -2 z" fill="#f2b63c" stroke="#2b2a2e" stroke-width="3" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="s-snowman" viewBox="0 0 90 130">
+    <g stroke="#2b2a2e" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+      <circle cx="45" cy="94" r="32" fill="#fff"/>
+      <circle cx="45" cy="44" r="22" fill="#fff"/>
+      <rect x="28" y="6" width="34" height="22" rx="4" fill="#2f4b7c"/><rect x="22" y="24" width="46" height="8" rx="3" fill="#2f4b7c"/>
+      <path d="M26 62 q19 12 38 0 l4 10 q-23 10 -46 0 z" fill="#ef6f9a"/>
+      <path d="M45 46 l18 4 l-18 4 z" fill="#f6894f"/>
+      <circle cx="38" cy="40" r="2.5" fill="#2b2a2e" stroke="none"/><circle cx="52" cy="40" r="2.5" fill="#2b2a2e" stroke="none"/>
+      <circle cx="45" cy="86" r="3" fill="#2b2a2e" stroke="none"/><circle cx="45" cy="100" r="3" fill="#2b2a2e" stroke="none"/>
+    </g>
+  </symbol>
+  <symbol id="s-mitten" viewBox="0 0 90 100">
+    <g stroke="#2b2a2e" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M26 82 V40 q0 -24 22 -24 q22 0 22 24 v14 q16 -8 18 8 q-4 12 -18 12 v8 z" fill="#ef6f9a"/>
+      <rect x="22" y="78" width="52" height="16" rx="5" fill="#fff"/>
+      <path d="M48 36 v16 M40 44 h16 M42 38 l12 12 M54 38 l-12 12" stroke="#fff" stroke-width="2.5"/>
     </g>
   </symbol>
 </svg>
@@ -300,19 +397,6 @@ section .card, section h2{position:relative; z-index:1}
 
 <!-- ============ HERO ============ -->
 <header class="hero" id="top">
-  <!-- floating decorations: edges only, never over content -->
-  <div class="stk swim" style="width:min(18vw,96px);top:3%;left:2%;--dur:7s"><svg viewBox="0 0 130 80"><use href="#s-fish"/></svg></div>
-  <div class="deco" style="width:44px;top:2%;right:5%;--dur:12s"><svg viewBox="0 0 40 70"><ellipse cx="20" cy="22" rx="16" ry="20" fill="var(--pink)"/><path d="M20 42 l-3 4 h6 z" fill="var(--pink)"/><path d="M20 46 q-6 10 0 20" stroke="var(--ink)" stroke-width="1.2" fill="none" opacity=".4"/></svg></div>
-  <div class="deco" style="width:24px;top:13%;right:13%;--dur:7s;--del:1s"><svg viewBox="0 0 40 40"><path class="twinkle" style="--dur:3.2s;--del:.5s" d="M20 2 L24 16 L38 20 L24 24 L20 38 L16 24 L2 20 L16 16 Z" fill="var(--yellow-strong)"/></svg></div>
-  <div class="stk spin" style="width:26px;top:19%;left:1.5%;opacity:.85"><svg viewBox="0 0 60 60"><use href="#s-snow"/></svg></div>
-  <div class="stk wob" style="width:min(13vw,66px);top:24%;right:1.5%;--dur:5s;--del:1s"><svg viewBox="0 0 90 84"><use href="#s-diamond"/></svg></div>
-  <div class="deco" style="width:20px;top:31%;left:3%;--dur:6s;--del:1.5s"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="var(--green-strong)"/></svg></div>
-  <div class="deco" style="width:16px;top:52%;right:3%;--dur:7.5s;--del:.8s"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="var(--coral)"/></svg></div>
-  <div class="deco" style="width:22px;top:46%;left:2%;--dur:9s"><svg viewBox="0 0 40 40"><path class="twinkle" style="--dur:2.6s" d="M20 2 L24 16 L38 20 L24 24 L20 38 L16 24 L2 20 L16 16 Z" fill="var(--sky-strong)"/></svg></div>
-  <div class="stk wob" style="width:min(12vw,64px);bottom:11%;left:3%;--dur:5.5s;--del:.7s"><svg viewBox="0 0 90 112"><use href="#s-choron"/></svg></div>
-  <div class="stk wob" style="width:min(14vw,84px);bottom:15%;right:2%;--dur:4.5s"><svg viewBox="0 0 140 152"><use href="#s-champagne"/></svg></div>
-  <div class="deco" style="width:30px;bottom:3%;left:8%;--dur:10s;--del:2s"><svg viewBox="0 0 40 40"><path class="twinkle" style="--dur:4s;--del:1s" d="M20 2 L24 16 L38 20 L24 24 L20 38 L16 24 L2 20 L16 16 Z" fill="var(--pink-strong)"/></svg></div>
-  <div class="stk spin" style="width:30px;bottom:3%;right:9%;opacity:.85;animation-direction:reverse"><svg viewBox="0 0 60 60"><use href="#s-snow"/></svg></div>
   <div class="wrap">
     <div class="kicker hand rv">Приглашение на</div><br>
     <h1 class="ransom rv d1" id="ransom" aria-label="Юбилей!">ЮБИЛЕЙ!</h1>
@@ -374,8 +458,6 @@ section .card, section h2{position:relative; z-index:1}
 
 <!-- ============ COUNTDOWN ============ -->
 <section class="wrap" id="countdown">
-  <div class="bg swim out-l" style="--w:92px;--dt:30%;top:-28px;left:3%;"><svg viewBox="0 0 130 80"><use href="#s-fish"/></svg></div>
-  <div class="bg swim out-r" style="--w:120px;--dt:60%;top:-24px;right:3%;"><svg viewBox="0 0 180 72"><use href="#s-sturgeon"/></svg></div>
   <div class="card tilt-l rv">
     <div class="tape pink"></div>
     <div class="hand" style="font-size:32px;margin-bottom:6px">До праздника осталось</div>
@@ -390,9 +472,6 @@ section .card, section h2{position:relative; z-index:1}
 
 <!-- ============ INVITATION ============ -->
 <section class="wrap invite" id="invite">
-  <div class="bg wob out-r" style="--w:96px;--dt:30%;top:-32px;right:3%;"><svg viewBox="0 0 120 80"><use href="#s-stroganina"/></svg></div>
-  <div class="bg wob out-l" style="--w:62px;--dt:55%;top:-29px;left:3%;"><svg viewBox="0 0 90 84"><use href="#s-diamond"/></svg></div>
-  <div class="bg spin out-r" style="--w:34px;--dt:80%;bottom:-17px;right:3%;"><svg viewBox="0 0 60 60"><use href="#s-snow"/></svg></div>
   <div class="card tilt-r rv">
     <div class="tape sky"></div>
     <!-- cake -->
@@ -429,8 +508,6 @@ section .card, section h2{position:relative; z-index:1}
 
 <!-- ============ DETAILS ============ -->
 <section class="wrap" id="details">
-  <div class="bg wob out-r" style="--w:80px;--dt:30%;top:-43px;right:3%;"><svg viewBox="0 0 140 152"><use href="#s-champagne"/></svg></div>
-  <div class="bg swim out-l" style="--w:84px;--dt:62%;bottom:-26px;left:3%;"><svg viewBox="0 0 130 80"><use href="#s-fish"/></svg></div>
   <h2 class="rv">Где и когда</h2>
   <div class="details">
     <div class="card rv d1">
@@ -457,8 +534,6 @@ section .card, section h2{position:relative; z-index:1}
 
 <!-- ============ DRESSCODE ============ -->
 <section class="wrap" id="dress">
-  <div class="bg wob out-l" style="--w:84px;--dt:30%;top:-35px;left:3%;"><svg viewBox="0 0 110 92"><use href="#s-caviar"/></svg></div>
-  <div class="bg spin out-r" style="--w:40px;--dt:64%;top:-20px;right:3%;"><svg viewBox="0 0 60 60"><use href="#s-snow"/></svg></div>
   <div class="card tilt-l rv">
     <div class="tape lilac"></div>
     <h2>Дресс-код</h2>
@@ -476,8 +551,6 @@ section .card, section h2{position:relative; z-index:1}
 
 <!-- ============ GIFTS ============ -->
 <section class="wrap" id="gifts">
-  <div class="bg swim out-r" style="--w:120px;--dt:30%;top:-24px;right:3%;"><svg viewBox="0 0 180 72"><use href="#s-sturgeon"/></svg></div>
-  <div class="bg wob out-l" style="--w:62px;--dt:62%;bottom:-39px;left:3%;"><svg viewBox="0 0 90 112"><use href="#s-choron"/></svg></div>
   <div class="card tilt-r rv">
     <div class="tape mint"></div>
     <div style="font-size:44px;line-height:1;text-align:center;margin-bottom:8px">✉️</div>
@@ -490,9 +563,6 @@ section .card, section h2{position:relative; z-index:1}
 
 <!-- ============ RSVP ============ -->
 <section class="wrap" id="rsvp">
-  <div class="bg wob out-l" style="--w:64px;--dt:30%;top:-40px;left:3%;"><svg viewBox="0 0 90 112"><use href="#s-choron"/></svg></div>
-  <div class="bg wob out-r" style="--w:66px;--dt:55%;top:-31px;right:3%;"><svg viewBox="0 0 90 84"><use href="#s-diamond"/></svg></div>
-  <div class="bg spin out-l" style="--w:34px;--dt:85%;bottom:-17px;left:3%;"><svg viewBox="0 0 60 60"><use href="#s-snow"/></svg></div>
   <div class="card rv">
     <div class="tape lemon"></div>
     <h2>Придёте?</h2>
@@ -525,10 +595,6 @@ section .card, section h2{position:relative; z-index:1}
 </section>
 
 <footer>
-  <div style="display:flex;justify-content:center;gap:18px;margin-bottom:18px">
-    <div class="stk wob" style="position:static;width:56px;--dur:4s"><svg viewBox="0 0 90 112"><use href="#s-choron"/></svg></div>
-    <div class="stk wob" style="position:static;width:70px;--dur:5s;--del:.5s"><svg viewBox="0 0 110 92"><use href="#s-caviar"/></svg></div>
-    <div class="stk wob" style="position:static;width:56px;--dur:4.5s;--del:1s"><svg viewBox="0 0 140 152"><use href="#s-champagne"/></svg></div>
   </div>
   <span class="hand">С любовью, Евгений и Ольга</span>
   20 ноября 2026 · Якутск
@@ -556,6 +622,68 @@ section .card, section h2{position:relative; z-index:1}
     s.style.setProperty('--y', (((i*5)%7) - 3) + 'px');
     el.appendChild(s);
   });
+
+
+  /* ---------- scattered background art ---------- */
+  const ART = [
+    ['s-fish','swim',70,100],['s-fish2','swim',70,100],['s-sturgeon','swim',96,130],['s-caviar','wob',62,84],
+    ['s-stroganina','wob',80,110],['s-champagne','wob',60,86],['s-diamond','wob',52,74],['s-choron','wob',50,70],
+    ['s-snow','spin',30,46],['s-mammoth','wob',86,120],['s-reindeer','wob',68,92],['s-gift','wob',56,78],
+    ['s-popper','wob',66,90],['s-cakeslice','wob',66,90],['s-balloons','float',60,84],['s-star','spin',30,46],
+    ['s-snowman','wob',50,70],['s-mitten','wob',48,66]
+  ].map(([id,anim,min,max])=>{ const vb = document.getElementById(id).getAttribute('viewBox').split(' '); return {id,anim,min,max,vb:vb.join(' '),ratio:+vb[3]/+vb[2]}; });
+  const artLayer = document.getElementById('bgart');
+  const rnd = (a,b)=>a+Math.random()*(b-a);
+  function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+  function layoutRect(el){ let x=0,y=0,n=el; while(n){ x+=n.offsetLeft; y+=n.offsetTop; n=n.offsetParent; } return {x,y,w:el.offsetWidth,h:el.offsetHeight}; }
+  const hit = (a,b)=> a.x < b.x+b.w && a.x+a.w > b.x && a.y < b.y+b.h && a.y+a.h > b.y;
+  let lastKey = '';
+  function layoutArt(){
+    const docW = document.documentElement.clientWidth, docH = document.documentElement.scrollHeight;
+    const mobile = docW < 760, scale = mobile ? .8 : (docW < 1100 ? 1 : 1.25);
+    const pad = mobile ? 8 : 16;
+    const blocks = [];
+    document.querySelectorAll('.card, section > h2, .hero .wrap > *, footer > *').forEach(el=>{
+      const r = layoutRect(el); if(r.w && r.h) blocks.push({x:r.x-pad, y:r.y-pad, w:r.w+pad*2, h:r.h+pad*2});
+    });
+    blocks.push({x:docW-90, y:innerHeight-90, w:90, h:90}); // music button on the first screen
+    const key = docW+'x'+docH+':'+blocks.map(b=>Math.round(b.y)+'/'+Math.round(b.h)).join(',');
+    if(key === lastKey) return; lastKey = key;
+    artLayer.innerHTML = ''; artLayer.style.height = docH+'px';
+    const minDist = mobile ? 108 : 190;
+    const step = mobile ? 34 : 56;
+    const pts = [];
+    for(let y=16; y<docH-60; y+=step) for(let x=6; x<docW-40; x+=step) pts.push([x+rnd(-step/2,step/2), y+rnd(-step/2,step/2)]);
+    shuffle(pts);
+    let bag = shuffle(ART.slice()), bi = 0, last = null;
+    const placed = [];
+    for(const [x,y] of pts){
+      const st = bag[bi];
+      const w = rnd(st.min, st.max) * scale, h = w * st.ratio;
+      if(x < 4 || x + w > docW - 4 || y + h > docH - 8) continue;
+      const r = {x, y, w, h};
+      if(blocks.some(b=>hit(r,b))) continue;
+      const cx = x + w/2, cy = y + h/2;
+      if(placed.some(p=>Math.hypot(p.cx-cx, p.cy-cy) < minDist + (p.w+w)/4)) continue;
+      placed.push({cx, cy, w});
+      const d = document.createElement('div');
+      d.className = 'art ' + st.anim;
+      d.style.cssText = `left:${x}px;top:${y}px;width:${w}px;--dur:${rnd(4,8).toFixed(1)}s;--del:${rnd(-6,0).toFixed(1)}s;rotate:${rnd(-14,14).toFixed(0)}deg`;
+      d.innerHTML = `<svg viewBox="${st.vb}"><use href="#${st.id}"/></svg>`;
+      artLayer.appendChild(d);
+      requestAnimationFrame(()=>requestAnimationFrame(()=>d.classList.add('show')));
+      // next sticker: never the same as the previous one
+      last = st; bi++; if(bi >= bag.length){ bag = shuffle(ART.slice()); if(bag[0] === last) bag.push(bag.shift()); bi = 0; }
+    }
+  }
+  let artTimer;
+  const relayout = ()=>{ clearTimeout(artTimer); artTimer = setTimeout(layoutArt, 250); };
+  layoutArt();
+  addEventListener('load', relayout);
+  setTimeout(relayout, 1500); setTimeout(relayout, 4000);
+  if(document.fonts) document.fonts.ready.then(relayout);
+  addEventListener('resize', relayout);
+  document.querySelectorAll('img').forEach(i=>i.addEventListener('load', relayout));
 
   /* ---------- reveal on scroll ---------- */
   const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }), {threshold:.12});
@@ -682,12 +810,12 @@ section .card, section h2{position:relative; z-index:1}
     document.getElementById('thanks-title').textContent = yes ? ('Ура, ' + name.split(' ')[0] + '!') : ('Спасибо, ' + name.split(' ')[0] + '!');
     document.getElementById('thanks-text').textContent = yes ? 'Ваш ответ получен. Ждём вас 20 ноября в 17:00!' : 'Ваш ответ получен. Будем скучать, но обязательно увидимся в другой раз.';
     thanks.querySelector('.big').textContent = yes ? '🎉' : '💌';
-    form.style.display='none'; thanks.style.display='block';
+    form.style.display='none'; thanks.style.display='block'; relayout();
     if(yes && !reduce){ const r = thanks.getBoundingClientRect(); burst(160, r.left + r.width/2, r.top + 60, 1.1); fanfare(); } else { pop(); }
     try{ localStorage.setItem('rsvp-'+name, attend.value); }catch(_){}
   });
   document.getElementById('again').addEventListener('click', ()=>{
-    form.reset(); submit.disabled=false; submit.textContent='Отправить ответ'; thanks.style.display='none'; form.style.display='grid'; form.name.focus(); pop();
+    form.reset(); submit.disabled=false; submit.textContent='Отправить ответ'; thanks.style.display='none'; form.style.display='grid'; form.name.focus(); pop(); relayout();
   });
   document.querySelectorAll('.choice input').forEach(i=>i.addEventListener('change', pop));
 })();
