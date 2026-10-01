@@ -11,7 +11,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎂%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Rubik:wght@400;500;700&family=Rubik+Mono+One&family=Unbounded:wght@500;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Neucha&family=Rubik:wght@400;500;700&family=Rubik+Mono+One&family=Unbounded:wght@500;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --paper:#f7f3ec; --paper-2:#efe9df; --ink:#2b2a2e; --muted:#6d6a70;
@@ -44,7 +44,7 @@ body::after{
 section{padding:72px 0}
 h2{font-family:"Unbounded",sans-serif; font-weight:800; font-size:clamp(26px,5vw,38px); line-height:1.15; margin:0 0 20px; letter-spacing:-.01em}
 p{margin:0 0 14px}
-.hand{font-family:"Caveat",cursive; font-weight:700}
+.hand{font-family:"Neucha",cursive; font-weight:400}
 .muted{color:var(--muted)}
 
 /* ransom letters */
@@ -54,7 +54,7 @@ p{margin:0 0 14px}
 .ransom .sp{width:.45em; background:transparent; box-shadow:none}
 .ransom .f1{font-family:"Rubik Mono One",monospace}
 .ransom .f2{font-family:"Unbounded",sans-serif; font-weight:800}
-.ransom .f3{font-family:"Caveat",cursive; font-weight:700; font-size:1.25em}
+.ransom .f3{font-family:"Neucha",cursive; font-weight:400; font-size:1.3em}
 .ransom .f4{font-family:"Rubik",sans-serif; font-weight:700; font-style:italic}
 
 /* hero */
@@ -62,8 +62,9 @@ p{margin:0 0 14px}
 .hero .wrap{position:relative; z-index:1}
 .kicker{font-size:clamp(26px,5vw,34px); color:var(--muted); margin-bottom:4px; transform:rotate(-2deg); display:inline-block}
 .hero .ransom{font-size:clamp(30px,8.4vw,66px); margin:6px 0 10px}
-.kids{position:relative; display:flex; align-items:flex-end; justify-content:center; gap:clamp(0px,2vw,24px); margin:28px auto 8px; max-width:560px}
-.kid{position:relative; width:clamp(130px,36vw,220px); flex:0 0 auto}
+.kids{position:relative; display:flex; align-items:flex-end; justify-content:center; gap:0; margin:44px auto 14px; max-width:620px; padding-bottom:26px}
+.kid{position:relative; width:clamp(160px,45vw,290px); flex:0 0 auto}
+.kid.left{margin-right:-5%; z-index:1} .kid.right{margin-left:-5%}
 .kid img{width:100%; height:auto; display:block;
   filter:grayscale(1) contrast(1.15) brightness(1.05);
   -webkit-mask-image:linear-gradient(to bottom, #000 78%, transparent 98%); mask-image:linear-gradient(to bottom, #000 78%, transparent 98%)}
@@ -76,12 +77,13 @@ p{margin:0 0 14px}
 .kid.left{transform:rotate(-5deg); animation:sway 6s ease-in-out infinite}
 .kid.right{transform:rotate(4deg); animation:sway 7s ease-in-out infinite reverse}
 .hat{position:absolute; width:46%; height:auto; z-index:2; filter:drop-shadow(0 3px 4px rgba(0,0,0,.15))}
-.kid.left .hat{top:-14%; left:4%; transform:rotate(-22deg)}
-.kid.right .hat{top:-13%; right:0%; transform:rotate(18deg)}
-.kid .name{position:absolute; left:50%; bottom:-10px; transform:translateX(-50%) rotate(-3deg); white-space:nowrap;
-  font-family:"Caveat",cursive; font-weight:700; font-size:clamp(22px,5.4vw,34px); background:#fff; padding:2px 14px; border-radius:6px; box-shadow:var(--shadow)}
-.kid.right .name{transform:translateX(-50%) rotate(3deg)}
-.fifty{position:relative; z-index:3; flex:0 0 auto; width:clamp(96px,22vw,150px); margin:0 -18px 40px; animation:bob 3.6s ease-in-out infinite}
+.kid.left .hat{top:-13%; left:17%; transform:rotate(-24deg)}
+.kid.right .hat{top:-25%; left:26%; transform:rotate(16deg)}
+.kid .name{position:absolute; left:36%; bottom:-10px; transform:translateX(-50%) rotate(-3deg); white-space:nowrap;
+  font-family:"Neucha",cursive; font-weight:400; font-size:clamp(24px,6vw,38px); background:#fff; padding:2px 14px; border-radius:6px; box-shadow:var(--shadow)}
+.kid.right .name{left:64%; transform:translateX(-50%) rotate(3deg)}
+.fifty{position:absolute; z-index:3; left:50%; bottom:8px; width:clamp(100px,26vw,170px); margin:0; animation:bob50 3.6s ease-in-out infinite}
+@keyframes bob50{0%,100%{transform:translate(-50%,0) rotate(0)}50%{transform:translate(-50%,-9px) rotate(2deg)}}
 .fifty svg{width:100%; height:auto; overflow:visible}
 .tagline{font-size:clamp(30px,7vw,48px); margin:28px 0 8px; line-height:1.05}
 .tagline b{color:var(--pink-strong)}
@@ -161,6 +163,26 @@ input[type=text]:focus{border-color:var(--sky-strong)}
 footer{text-align:center; padding:40px 0 110px; color:var(--muted); font-size:15px}
 footer .hand{font-size:34px; color:var(--ink); display:block; margin-bottom:6px}
 
+/* stickers */
+.stk{position:absolute; pointer-events:none; z-index:2}
+.hero .stk{z-index:0}
+.stk svg{width:100%; height:auto; display:block; overflow:visible; filter:drop-shadow(0 4px 6px rgba(43,42,46,.14))}
+.swim{animation:swim var(--dur,6s) ease-in-out infinite; animation-delay:var(--del,0s)}
+.wob{animation:wob var(--dur,4s) ease-in-out infinite; animation-delay:var(--del,0s)}
+.spin{animation:spin 14s linear infinite}
+.bubbles circle{animation:bubble 2.4s ease-in infinite} .bubbles circle:nth-child(2){animation-delay:.8s} .bubbles circle:nth-child(3){animation-delay:1.6s}
+@keyframes swim{0%,100%{transform:translateX(0) rotate(-5deg)}50%{transform:translateX(22px) rotate(5deg)}}
+@keyframes wob{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg) translateY(-4px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes bubble{0%{transform:translateY(0);opacity:0}20%{opacity:1}100%{transform:translateY(-26px);opacity:0}}
+.card .stk{width:74px}
+section{position:relative}
+section .card, section h2{position:relative; z-index:1}
+.bg{position:absolute; z-index:0; pointer-events:none; width:var(--w,72px); opacity:.95}
+.bg svg{width:100%; height:auto; display:block; overflow:visible; filter:drop-shadow(0 4px 6px rgba(43,42,46,.12))}
+@media (min-width:1000px){.bg{width:calc(var(--w,72px)*1.6); top:var(--dt,30%)!important; bottom:auto!important} .bg.out-l{left:calc(50% - 380px - var(--w,72px)*1.9)!important} .bg.out-r{right:calc(50% - 380px - var(--w,72px)*1.9)!important}}
+@media (max-width:420px){.card .stk{width:58px}}
+
 /* reveal */
 .rv{opacity:0; transform:translateY(26px) scale(.985); transition:opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1)}
 .rv.in{opacity:1; transform:none}
@@ -185,6 +207,92 @@ footer .hand{font-size:34px; color:var(--ink); display:block; margin-bottom:6px}
 
 <canvas id="confetti"></canvas>
 
+<!-- ======== sticker sprite (Yakut flavour, kids' style) ======== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="ink" />
+  </defs>
+  <symbol id="s-fish" viewBox="0 0 130 80">
+    <g stroke="#2b2a2e" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M92 40 L124 16 L117 40 L124 64 Z" fill="#5aa9e6"/>
+      <path d="M40 22 Q56 0 74 20 Z" fill="#5aa9e6"/>
+      <path d="M50 60 Q60 76 76 62 Z" fill="#5aa9e6"/>
+      <ellipse cx="55" cy="40" rx="42" ry="24" fill="#c3e1f5"/>
+      <path d="M66 22 q14 18 0 36 M80 26 q9 14 0 28" fill="none" opacity=".6"/>
+      <circle cx="30" cy="34" r="6.5" fill="#fff"/><circle cx="31.5" cy="34.5" r="2.6" fill="#2b2a2e" stroke="none"/>
+      <path d="M15 47 q5 4 10 0" fill="none"/>
+    </g>
+  </symbol>
+  <symbol id="s-sturgeon" viewBox="0 0 180 72">
+    <g stroke="#2b2a2e" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M22 36 L4 16 L12 36 L4 56 Z" fill="#8ea6bd"/>
+      <path d="M18 36 C 40 10, 110 8, 170 32 C 110 56, 40 60, 18 36 Z" fill="#b7c7d8"/>
+      <path d="M48 23 l5 -9 l5 9 M70 18 l5 -9 l5 9 M92 17 l5 -9 l5 9 M114 19 l5 -9 l5 9 M136 24 l5 -9 l5 9" fill="#8ea6bd"/>
+      <path d="M78 46 q10 14 24 2 Z" fill="#8ea6bd"/>
+      <path d="M40 40 Q95 50 152 38" fill="none" opacity=".5"/>
+      <circle cx="146" cy="30" r="4.5" fill="#fff"/><circle cx="147" cy="30" r="2" fill="#2b2a2e" stroke="none"/>
+      <path d="M154 40 l-2 8 M161 39 l1 8" fill="none"/>
+    </g>
+  </symbol>
+  <symbol id="s-caviar" viewBox="0 0 110 92">
+    <g stroke="#2b2a2e" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M8 46 Q55 112 102 46 Z" fill="#dfd0f2"/>
+      <ellipse cx="55" cy="46" rx="47" ry="11" fill="#c9b6ea"/>
+      <g fill="#f6894f">
+        <circle cx="35" cy="38" r="9"/><circle cx="75" cy="38" r="9"/><circle cx="55" cy="30" r="9"/><circle cx="45" cy="44" r="9"/><circle cx="65" cy="44" r="9"/><circle cx="55" cy="48" r="8"/>
+      </g>
+      <g fill="#fff" stroke="none"><circle cx="32" cy="35" r="2.5"/><circle cx="72" cy="35" r="2.5"/><circle cx="52" cy="27" r="2.5"/><circle cx="42" cy="41" r="2.5"/><circle cx="62" cy="41" r="2.5"/></g>
+    </g>
+  </symbol>
+  <symbol id="s-champagne" viewBox="0 0 140 152">
+    <g stroke="#2b2a2e" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+      <g transform="rotate(32 86 10)"><rect x="79" y="2" width="14" height="18" rx="5" fill="#d9b48f"/></g>
+      <path d="M68 18 l-9 -8 M88 30 l6 -11 M98 36 l11 -3" stroke="#f2b63c" stroke-width="4"/>
+      <rect x="42" y="22" width="18" height="54" rx="7" fill="#2f5d45"/>
+      <rect x="28" y="70" width="46" height="78" rx="9" fill="#2f5d45"/>
+      <rect x="39" y="16" width="24" height="20" rx="6" fill="#f2b63c"/>
+      <rect x="34" y="94" width="34" height="30" rx="5" fill="#fae7a6"/>
+      <text x="51" y="116" text-anchor="middle" font-family="Unbounded,sans-serif" font-weight="800" font-size="17" fill="#2b2a2e" stroke="none">50</text>
+      <path d="M98 148 h30 M113 148 v-28" fill="none"/>
+      <path d="M96 62 h34 l-5 58 h-24 Z" fill="#fff8d6"/>
+      <path d="M99 86 h28 l-3 34 h-22 Z" fill="#fae7a6" stroke="none"/>
+      <g fill="#fff" stroke="none" class="bubbles"><circle cx="108" cy="104" r="2.6"/><circle cx="116" cy="94" r="2.2"/><circle cx="111" cy="114" r="2"/></g>
+    </g>
+  </symbol>
+  <symbol id="s-diamond" viewBox="0 0 90 84">
+    <g stroke="#2b2a2e" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M10 32 L24 12 H66 L80 32 Z" fill="#c3e1f5"/>
+      <path d="M10 32 H80 L45 78 Z" fill="#5aa9e6"/>
+      <path d="M24 12 L36 32 L45 78 M66 12 L54 32 L45 78 M36 32 H54" fill="none" opacity=".7"/>
+      <path d="M78 4 l2 6 l6 2 l-6 2 l-2 6 l-2 -6 l-6 -2 l6 -2 Z" fill="#fff" stroke-width="2"/>
+    </g>
+  </symbol>
+  <symbol id="s-choron" viewBox="0 0 90 112">
+    <g stroke="#2b2a2e" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M45 76 L31 104 M45 76 L59 104 M45 76 V104" stroke="#7a4f32" stroke-width="7"/>
+      <path d="M18 12 H72 L63 62 Q45 72 27 62 Z" fill="#d9b48f"/>
+      <rect x="39" y="62" width="12" height="16" rx="4" fill="#d9b48f"/>
+      <ellipse cx="45" cy="12" rx="27" ry="7" fill="#e8cfae"/>
+      <path d="M25 30 l6 -6 l6 6 l6 -6 l6 6 l6 -6 l6 6 M24 44 H66 M28 54 H62" fill="none"/>
+    </g>
+  </symbol>
+  <symbol id="s-snow" viewBox="0 0 60 60">
+    <g stroke="#5aa9e6" stroke-width="3" stroke-linecap="round" fill="none">
+      <path id="arm" d="M30 30 V4 M30 11 l-6 6 M30 11 l6 6"/>
+      <use href="#arm" transform="rotate(60 30 30)"/><use href="#arm" transform="rotate(120 30 30)"/><use href="#arm" transform="rotate(180 30 30)"/><use href="#arm" transform="rotate(240 30 30)"/><use href="#arm" transform="rotate(300 30 30)"/>
+    </g>
+  </symbol>
+  <symbol id="s-stroganina" viewBox="0 0 120 80">
+    <g stroke="#2b2a2e" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+      <ellipse cx="60" cy="58" rx="56" ry="16" fill="#fff"/>
+      <path d="M30 56 q8 -30 26 -26 q-6 14 -2 28 Z" fill="#fde3ea"/>
+      <path d="M52 56 q4 -34 24 -30 q-4 16 2 30 Z" fill="#f8c9d4"/>
+      <path d="M74 56 q10 -26 24 -16 q-10 8 -6 18 Z" fill="#fde3ea"/>
+      <path d="M40 60 h10 M62 62 h12 M84 60 h8" fill="none" opacity=".4"/>
+    </g>
+  </symbol>
+</svg>
+
 <button class="music" id="music" aria-label="Включить музыку" title="Музыка">
   <span class="icon">🎵</span>
   <span class="bars"><i></i><i></i><i></i></span>
@@ -192,17 +300,19 @@ footer .hand{font-size:34px; color:var(--ink); display:block; margin-bottom:6px}
 
 <!-- ============ HERO ============ -->
 <header class="hero" id="top">
-  <!-- floating decorations -->
-  <div class="deco" style="width:34px;top:12%;left:8%;--dur:9s"><svg viewBox="0 0 40 40"><path class="twinkle" style="--dur:2.6s" d="M20 2 L24 16 L38 20 L24 24 L20 38 L16 24 L2 20 L16 16 Z" fill="var(--sky-strong)"/></svg></div>
-  <div class="deco" style="width:26px;top:20%;right:10%;--dur:7s;--del:1s"><svg viewBox="0 0 40 40"><path class="twinkle" style="--dur:3.2s;--del:.5s" d="M20 2 L24 16 L38 20 L24 24 L20 38 L16 24 L2 20 L16 16 Z" fill="var(--yellow-strong)"/></svg></div>
-  <div class="deco" style="width:44px;bottom:18%;left:6%;--dur:10s;--del:2s"><svg viewBox="0 0 40 40"><path class="twinkle" style="--dur:4s;--del:1s" d="M20 2 L24 16 L38 20 L24 24 L20 38 L16 24 L2 20 L16 16 Z" fill="var(--pink-strong)"/></svg></div>
-  <div class="deco" style="width:30px;bottom:26%;right:7%;--dur:8s;--del:.5s"><svg viewBox="0 0 40 40"><path class="twinkle" style="--dur:2.9s;--del:1.4s" d="M20 2 L24 16 L38 20 L24 24 L20 38 L16 24 L2 20 L16 16 Z" fill="var(--violet-strong)"/></svg></div>
-  <div class="deco" style="width:22px;top:40%;left:14%;--dur:6s;--del:1.5s"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="var(--green-strong)"/></svg></div>
-  <div class="deco" style="width:18px;top:55%;right:14%;--dur:7.5s;--del:.8s"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="var(--coral)"/></svg></div>
-  <!-- balloons -->
-  <div class="deco" style="width:46px;top:6%;right:22%;--dur:12s"><svg viewBox="0 0 40 70"><ellipse cx="20" cy="22" rx="16" ry="20" fill="var(--pink)"/><path d="M20 42 l-3 4 h6 z" fill="var(--pink)"/><path d="M20 46 q-6 10 0 20" stroke="var(--ink)" stroke-width="1.2" fill="none" opacity=".4"/></svg></div>
-  <div class="deco" style="width:40px;top:10%;left:20%;--dur:11s;--del:3s"><svg viewBox="0 0 40 70"><ellipse cx="20" cy="22" rx="16" ry="20" fill="var(--sky)"/><path d="M20 42 l-3 4 h6 z" fill="var(--sky)"/><path d="M20 46 q6 10 0 20" stroke="var(--ink)" stroke-width="1.2" fill="none" opacity=".4"/></svg></div>
-
+  <!-- floating decorations: edges only, never over content -->
+  <div class="stk swim" style="width:min(18vw,96px);top:3%;left:2%;--dur:7s"><svg viewBox="0 0 130 80"><use href="#s-fish"/></svg></div>
+  <div class="deco" style="width:44px;top:2%;right:5%;--dur:12s"><svg viewBox="0 0 40 70"><ellipse cx="20" cy="22" rx="16" ry="20" fill="var(--pink)"/><path d="M20 42 l-3 4 h6 z" fill="var(--pink)"/><path d="M20 46 q-6 10 0 20" stroke="var(--ink)" stroke-width="1.2" fill="none" opacity=".4"/></svg></div>
+  <div class="deco" style="width:24px;top:13%;right:13%;--dur:7s;--del:1s"><svg viewBox="0 0 40 40"><path class="twinkle" style="--dur:3.2s;--del:.5s" d="M20 2 L24 16 L38 20 L24 24 L20 38 L16 24 L2 20 L16 16 Z" fill="var(--yellow-strong)"/></svg></div>
+  <div class="stk spin" style="width:26px;top:19%;left:1.5%;opacity:.85"><svg viewBox="0 0 60 60"><use href="#s-snow"/></svg></div>
+  <div class="stk wob" style="width:min(13vw,66px);top:24%;right:1.5%;--dur:5s;--del:1s"><svg viewBox="0 0 90 84"><use href="#s-diamond"/></svg></div>
+  <div class="deco" style="width:20px;top:31%;left:3%;--dur:6s;--del:1.5s"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="var(--green-strong)"/></svg></div>
+  <div class="deco" style="width:16px;top:52%;right:3%;--dur:7.5s;--del:.8s"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="var(--coral)"/></svg></div>
+  <div class="deco" style="width:22px;top:46%;left:2%;--dur:9s"><svg viewBox="0 0 40 40"><path class="twinkle" style="--dur:2.6s" d="M20 2 L24 16 L38 20 L24 24 L20 38 L16 24 L2 20 L16 16 Z" fill="var(--sky-strong)"/></svg></div>
+  <div class="stk wob" style="width:min(12vw,64px);bottom:11%;left:3%;--dur:5.5s;--del:.7s"><svg viewBox="0 0 90 112"><use href="#s-choron"/></svg></div>
+  <div class="stk wob" style="width:min(14vw,84px);bottom:15%;right:2%;--dur:4.5s"><svg viewBox="0 0 140 152"><use href="#s-champagne"/></svg></div>
+  <div class="deco" style="width:30px;bottom:3%;left:8%;--dur:10s;--del:2s"><svg viewBox="0 0 40 40"><path class="twinkle" style="--dur:4s;--del:1s" d="M20 2 L24 16 L38 20 L24 24 L20 38 L16 24 L2 20 L16 16 Z" fill="var(--pink-strong)"/></svg></div>
+  <div class="stk spin" style="width:30px;bottom:3%;right:9%;opacity:.85;animation-direction:reverse"><svg viewBox="0 0 60 60"><use href="#s-snow"/></svg></div>
   <div class="wrap">
     <div class="kicker hand rv">Приглашение на</div><br>
     <h1 class="ransom rv d1" id="ransom" aria-label="Юбилей!">ЮБИЛЕЙ!</h1>
@@ -220,7 +330,7 @@ footer .hand{font-size:34px; color:var(--ink); display:block; margin-bottom:6px}
       </div>
 
       <div class="fifty" aria-hidden="true">
-        <svg viewBox="0 0 160 140">
+        <svg viewBox="0 0 160 110">
           <defs><filter id="sh"><feDropShadow dx="0" dy="6" stdDeviation="0" flood-color="#2b2a2e" flood-opacity=".18"/></filter></defs>
           <!-- "50" sticker -->
           <g filter="url(#sh)" transform="rotate(-8 80 60)" font-family="Unbounded,sans-serif" font-weight="800" font-size="92">
@@ -231,9 +341,6 @@ footer .hand{font-size:34px; color:var(--ink); display:block; margin-bottom:6px}
           <!-- exclamation doodle -->
           <g transform="translate(138 10) rotate(14)" stroke="var(--yellow-strong)" stroke-width="5" stroke-linecap="round" fill="none"><path d="M0 0 v22"/><path d="M0 32 v2"/></g>
           <g transform="translate(150 6) rotate(20)" stroke="var(--green-strong)" stroke-width="5" stroke-linecap="round" fill="none"><path d="M0 0 v18"/><path d="M0 27 v2"/></g>
-          <!-- arrow doodle -->
-          <path d="M20 118 q30 20 70 2" stroke="var(--sky-strong)" stroke-width="4" fill="none" stroke-linecap="round"/>
-          <path d="M80 112 l12 6 l-10 9" stroke="var(--sky-strong)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
 
@@ -264,11 +371,14 @@ footer .hand{font-size:34px; color:var(--ink); display:block; margin-bottom:6px}
   </div>
 </header>
 
+
 <!-- ============ COUNTDOWN ============ -->
 <section class="wrap" id="countdown">
+  <div class="bg swim out-l" style="--w:92px;--dt:30%;top:-28px;left:3%;"><svg viewBox="0 0 130 80"><use href="#s-fish"/></svg></div>
+  <div class="bg swim out-r" style="--w:120px;--dt:60%;top:-24px;right:3%;"><svg viewBox="0 0 180 72"><use href="#s-sturgeon"/></svg></div>
   <div class="card tilt-l rv">
     <div class="tape pink"></div>
-    <div class="hand" style="font-size:30px;margin-bottom:6px">До праздника осталось</div>
+    <div class="hand" style="font-size:32px;margin-bottom:6px">До праздника осталось</div>
     <div class="count" id="count">
       <div><b>—</b><small>дней</small></div>
       <div><b>—</b><small>часов</small></div>
@@ -280,6 +390,9 @@ footer .hand{font-size:34px; color:var(--ink); display:block; margin-bottom:6px}
 
 <!-- ============ INVITATION ============ -->
 <section class="wrap invite" id="invite">
+  <div class="bg wob out-r" style="--w:96px;--dt:30%;top:-32px;right:3%;"><svg viewBox="0 0 120 80"><use href="#s-stroganina"/></svg></div>
+  <div class="bg wob out-l" style="--w:62px;--dt:55%;top:-29px;left:3%;"><svg viewBox="0 0 90 84"><use href="#s-diamond"/></svg></div>
+  <div class="bg spin out-r" style="--w:34px;--dt:80%;bottom:-17px;right:3%;"><svg viewBox="0 0 60 60"><use href="#s-snow"/></svg></div>
   <div class="card tilt-r rv">
     <div class="tape sky"></div>
     <!-- cake -->
@@ -316,6 +429,8 @@ footer .hand{font-size:34px; color:var(--ink); display:block; margin-bottom:6px}
 
 <!-- ============ DETAILS ============ -->
 <section class="wrap" id="details">
+  <div class="bg wob out-r" style="--w:80px;--dt:30%;top:-43px;right:3%;"><svg viewBox="0 0 140 152"><use href="#s-champagne"/></svg></div>
+  <div class="bg swim out-l" style="--w:84px;--dt:62%;bottom:-26px;left:3%;"><svg viewBox="0 0 130 80"><use href="#s-fish"/></svg></div>
   <h2 class="rv">Где и когда</h2>
   <div class="details">
     <div class="card rv d1">
@@ -342,10 +457,12 @@ footer .hand{font-size:34px; color:var(--ink); display:block; margin-bottom:6px}
 
 <!-- ============ DRESSCODE ============ -->
 <section class="wrap" id="dress">
+  <div class="bg wob out-l" style="--w:84px;--dt:30%;top:-35px;left:3%;"><svg viewBox="0 0 110 92"><use href="#s-caviar"/></svg></div>
+  <div class="bg spin out-r" style="--w:40px;--dt:64%;top:-20px;right:3%;"><svg viewBox="0 0 60 60"><use href="#s-snow"/></svg></div>
   <div class="card tilt-l rv">
     <div class="tape lilac"></div>
     <h2>Дресс-код</h2>
-    <p class="muted" style="text-align:center">Будем рады, если в вашем наряде найдётся место нашим любимым цветам.</p>
+    <p class="muted" style="text-align:center">Будем рады, если вы поддержите дресс-код вечера.</p>
     <div class="swatches">
       <div class="sw"><i style="background:#2f4b7c"></i>синий</div>
       <div class="sw"><i style="background:#d9c3a5"></i>бежевый</div>
@@ -359,6 +476,8 @@ footer .hand{font-size:34px; color:var(--ink); display:block; margin-bottom:6px}
 
 <!-- ============ GIFTS ============ -->
 <section class="wrap" id="gifts">
+  <div class="bg swim out-r" style="--w:120px;--dt:30%;top:-24px;right:3%;"><svg viewBox="0 0 180 72"><use href="#s-sturgeon"/></svg></div>
+  <div class="bg wob out-l" style="--w:62px;--dt:62%;bottom:-39px;left:3%;"><svg viewBox="0 0 90 112"><use href="#s-choron"/></svg></div>
   <div class="card tilt-r rv">
     <div class="tape mint"></div>
     <div style="font-size:44px;line-height:1;text-align:center;margin-bottom:8px">✉️</div>
@@ -371,6 +490,9 @@ footer .hand{font-size:34px; color:var(--ink); display:block; margin-bottom:6px}
 
 <!-- ============ RSVP ============ -->
 <section class="wrap" id="rsvp">
+  <div class="bg wob out-l" style="--w:64px;--dt:30%;top:-40px;left:3%;"><svg viewBox="0 0 90 112"><use href="#s-choron"/></svg></div>
+  <div class="bg wob out-r" style="--w:66px;--dt:55%;top:-31px;right:3%;"><svg viewBox="0 0 90 84"><use href="#s-diamond"/></svg></div>
+  <div class="bg spin out-l" style="--w:34px;--dt:85%;bottom:-17px;left:3%;"><svg viewBox="0 0 60 60"><use href="#s-snow"/></svg></div>
   <div class="card rv">
     <div class="tape lemon"></div>
     <h2>Придёте?</h2>
@@ -403,6 +525,11 @@ footer .hand{font-size:34px; color:var(--ink); display:block; margin-bottom:6px}
 </section>
 
 <footer>
+  <div style="display:flex;justify-content:center;gap:18px;margin-bottom:18px">
+    <div class="stk wob" style="position:static;width:56px;--dur:4s"><svg viewBox="0 0 90 112"><use href="#s-choron"/></svg></div>
+    <div class="stk wob" style="position:static;width:70px;--dur:5s;--del:.5s"><svg viewBox="0 0 110 92"><use href="#s-caviar"/></svg></div>
+    <div class="stk wob" style="position:static;width:56px;--dur:4.5s;--del:1s"><svg viewBox="0 0 140 152"><use href="#s-champagne"/></svg></div>
+  </div>
   <span class="hand">С любовью, Евгений и Ольга</span>
   20 ноября 2026 · Якутск
 </footer>
