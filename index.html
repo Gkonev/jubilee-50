@@ -545,7 +545,7 @@ section .card, section h2{position:relative; z-index:1}
     <div class="tape lemon"></div>
     <h2>Придёте?</h2>
     <p>Пожалуйста, ответьте <span class="deadline">до 1 ноября</span>, чтобы мы успели всё подготовить.</p>
-    <p class="note">Анкету заполняет каждый гость отдельно. Если вы придёте вдвоём или семьёй, пришлите ответ за каждого: так мы точно никого не забудем за столом.</p>
+    <p class="note">Анкету заполняет каждый гость отдельно. Если вы придёте вдвоём, пришлите ответ за каждого: так мы точно никого не забудем за столом.</p>
 
     <form class="form" id="form" novalidate>
       <div>
@@ -749,18 +749,36 @@ section .card, section h2{position:relative; z-index:1}
     loopTimer = setTimeout(schedule, total*1000);
   }
   const btn = document.getElementById('music');
+  /* real track if present (audio/song.mp3), music box as fallback */
+  let track = new Audio('audio/song.mp3'); track.loop = true; track.preload = 'auto'; track.volume = .85;
+  let trackOk = null; // null = unknown, true = file plays, false = no file
+  track.addEventListener('canplaythrough', ()=>{ if(trackOk===null) trackOk = true; }, {once:true});
+  track.addEventListener('error', ()=>{ trackOk = false; track = null; }, {once:true});
+  track.load();
+  function ui(on){ playing = on; btn.classList.toggle('on', on); btn.setAttribute('aria-label', on ? 'Выключить музыку' : 'Включить музыку'); }
   function initAudio(){
     if(ac) return;
     ac = new (window.AudioContext||window.webkitAudioContext)();
     master = ac.createGain(); master.gain.value = .9;
-    // soft echo
     const d = ac.createDelay(1); d.delayTime.value = .32; const fb = ac.createGain(); fb.gain.value=.28; const wet = ac.createGain(); wet.gain.value=.35;
     master.connect(ac.destination); master.connect(d); d.connect(fb); fb.connect(d); d.connect(wet); wet.connect(ac.destination);
   }
-  function startMusic(){ initAudio(); ac.resume(); playing=true; btn.classList.add('on'); btn.setAttribute('aria-label','Выключить музыку'); schedule(); }
-  function stopMusic(){ playing=false; btn.classList.remove('on'); btn.setAttribute('aria-label','Включить музыку'); clearTimeout(loopTimer); if(ac) ac.suspend(); }
-  btn.addEventListener('click', ()=> playing ? stopMusic() : startMusic());
-  document.addEventListener('visibilitychange', ()=>{ if(document.hidden && playing){ stopMusic(); } });
+  function synthStart(){ initAudio(); ac.resume().then(()=>{ if(ac.state==='running'){ ui(true); schedule(); } }); }
+  function synthStop(){ clearTimeout(loopTimer); if(ac) ac.suspend(); }
+  let userStopped = false;
+  function startMusic(){
+    if(playing) return;
+    if(track && trackOk !== false){
+      track.play().then(()=>ui(true)).catch(()=>{ /* autoplay blocked or file missing: wait for a tap */ if(trackOk===false) synthStart(); });
+    } else synthStart();
+  }
+  function stopMusic(){ if(track) track.pause(); synthStop(); ui(false); }
+  btn.addEventListener('click', ()=>{ if(playing){ userStopped = true; stopMusic(); } else { userStopped = false; startMusic(); } });
+  document.addEventListener('visibilitychange', ()=>{ if(document.hidden && playing){ if(track) track.pause(); synthStop(); } else if(!document.hidden && playing){ if(track && trackOk) track.play().catch(()=>{}); } });
+  // try right away, then on the very first touch / click anywhere on the page
+  setTimeout(()=>{ if(!playing && !userStopped) startMusic(); }, 1000);
+  const onFirst = e => { if(btn.contains(e.target)) return; if(!playing && !userStopped) startMusic(); };
+  ['touchend','click','keydown'].forEach(ev=>document.addEventListener(ev, onFirst, {passive:true}));
 
   function pop(){ // small click sound
     if(!ac) return;
