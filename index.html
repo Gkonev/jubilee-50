@@ -198,11 +198,41 @@ section .card, section h2{position:relative; z-index:1}
 .flame.f2{animation-duration:.9s; animation-delay:.3s}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important; transition:none!important} .rv{opacity:1; transform:none}}
 @media (max-width:420px){.kid .name{font-size:20px} section{padding:56px 0}}
+
+/* opening screen */
+body.locked{overflow:hidden}
+#gate{position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center; background:var(--paper); text-align:center; padding:24px; transition:opacity .8s ease, visibility .8s}
+#gate.out{opacity:0; visibility:hidden; pointer-events:none}
+.gate-in{max-width:420px; width:100%; animation:gatein .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes gatein{from{opacity:0; transform:translateY(18px) scale(.97)}to{opacity:1; transform:none}}
+.env{position:relative; width:min(70vw,300px); aspect-ratio:3/2; margin:0 auto 28px; perspective:800px}
+.env .back{position:absolute; inset:0; background:var(--pink); border-radius:12px; box-shadow:var(--shadow)}
+.env .letter{position:absolute; left:8%; right:8%; top:10%; bottom:6%; background:#fff; border-radius:8px; display:grid; place-items:center; font-family:"Unbounded",sans-serif; font-weight:800; font-size:clamp(40px,12vw,64px); color:var(--pink-strong); box-shadow:0 4px 12px rgba(0,0,0,.08); z-index:1; transition:transform .8s cubic-bezier(.2,.8,.2,1) .3s}
+.env .front{position:absolute; left:0; right:0; bottom:0; height:58%; background:var(--pink); clip-path:polygon(0 0,50% 48%,100% 0,100% 100%,0 100%); border-radius:0 0 12px 12px; z-index:2}
+.env .flap{position:absolute; left:0; right:0; top:0; height:55%; background:var(--pink-strong); clip-path:polygon(0 0,100% 0,50% 100%); transform-origin:top; border-radius:12px 12px 0 0; z-index:3; transition:transform .7s ease, z-index 0s .35s}
+.env .seal{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:54px; height:54px; border-radius:50%; background:var(--yellow-strong); box-shadow:var(--shadow); display:grid; place-items:center; z-index:4; font-size:24px; transition:opacity .3s, transform .3s}
+#gate.open .flap{transform:rotateX(180deg); z-index:0}
+#gate.open .seal{opacity:0; transform:translate(-50%,-50%) scale(.5)}
+#gate.open .letter{transform:translateY(-42%) rotate(-2deg)}
+.gate-title{font-family:"Amatic SC",cursive; font-weight:700; font-size:clamp(40px,10vw,60px); line-height:1; margin:0 0 6px}
+.gate-sub{color:var(--muted); margin:0 0 22px; font-size:16px}
+.gate-btn{animation:pulse 1.8s ease-in-out infinite; font-size:17px; padding:15px 26px}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.gate-hint{font-size:13px; color:var(--muted); margin-top:14px}
 </style>
 </head>
 <body>
 
 <canvas id="confetti"></canvas>
+<div id="gate" role="dialog" aria-label="Приглашение">
+  <div class="gate-in">
+    <div class="env" aria-hidden="true"><div class="back"></div><div class="letter">50</div><div class="front"></div><div class="flap"></div><div class="seal">💌</div></div>
+    <div class="gate-title">Евгений и Ольга</div>
+    <p class="gate-sub">приглашают на юбилей · 20 ноября 2026</p>
+    <button class="btn gate-btn" id="open" type="button">Открыть приглашение</button>
+    <p class="gate-hint">🎵 внутри музыка</p>
+  </div>
+</div>
 <div id="bgart" aria-hidden="true"></div>
 
 <!-- ======== sticker sprite (Yakut flavour, kids' style) ======== -->
@@ -711,7 +741,6 @@ section .card, section h2{position:relative; z-index:1}
     }
     raf = parts.length ? requestAnimationFrame(draw) : (cx.clearRect(0,0,W,H), null);
   }
-  if(!reduce){ setTimeout(()=>{ burst(45, innerWidth*.3, innerHeight*.35, .9); burst(45, innerWidth*.7, innerHeight*.35, .9); }, 900); }
 
   /* ---------- music box (Web Audio) ---------- */
   let ac=null, master=null, playing=false, loopTimer=null;
@@ -776,7 +805,6 @@ section .card, section h2{position:relative; z-index:1}
   btn.addEventListener('click', ()=>{ if(playing){ userStopped = true; stopMusic(); } else { userStopped = false; startMusic(); } });
   document.addEventListener('visibilitychange', ()=>{ if(document.hidden && playing){ if(track) track.pause(); synthStop(); } else if(!document.hidden && playing){ if(track && trackOk) track.play().catch(()=>{}); } });
   // try right away, then on the very first touch / click anywhere on the page
-  setTimeout(()=>{ if(!playing && !userStopped) startMusic(); }, 1000);
   const onFirst = e => { if(btn.contains(e.target)) return; if(!playing && !userStopped) startMusic(); };
   ['touchend','click','keydown'].forEach(ev=>document.addEventListener(ev, onFirst, {passive:true}));
 
@@ -817,6 +845,17 @@ section .card, section h2{position:relative; z-index:1}
     form.reset(); submit.disabled=false; submit.textContent='Отправить ответ'; thanks.style.display='none'; form.style.display='grid'; form.name.focus(); pop(); relayout();
   });
   document.querySelectorAll('.choice input').forEach(i=>i.addEventListener('change', pop));
+
+  /* ---------- opening screen ---------- */
+  const gate = document.getElementById('gate');
+  document.body.classList.add('locked');
+  document.getElementById('open').addEventListener('click', ()=>{
+    userStopped = false; startMusic();
+    gate.classList.add('open');
+    setTimeout(()=>{ gate.classList.add('out'); document.body.classList.remove('locked');
+      if(!reduce){ burst(60, innerWidth*.3, innerHeight*.35, .9); burst(60, innerWidth*.7, innerHeight*.35, .9); } }, 900);
+    setTimeout(()=>gate.remove(), 1900);
+  });
 })();
 </script>
 </body>
